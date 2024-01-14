@@ -1,0 +1,37 @@
+.mainnav ul {
+  display: flex;
+  justify-content: center;
+}
+
+.mainnav ul li {
+  display: flex;
+  margin: 0px 30px;
+  font-weight: bold;
+  font-size: larger;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.mainnav ul a {
+  text-decoration: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+.mainHeading {
+  text-align: center;
+}
+
+.BlogTemp h2 {
+  text-align: center;
+  font-size: 30px;
+}
+
+.BlogTemp div {
+  margin-left: 20%;
+  font-size: 15px;
+}
+
+.myimg {
+  border-radius: 5%;
+  border: 2px solid rgb(55, 37, 37);
+}
