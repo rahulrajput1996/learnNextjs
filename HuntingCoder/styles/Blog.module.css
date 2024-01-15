@@ -1,0 +1,14 @@
+.container{
+    display: flex;
+    flex-direction:column;
+    padding: 1% 10%;
+    text-decoration: none
+}
+
+.contchild{
+    cursor: pointer;
+    text-align: center;
+    font: 22px arial bold;
+    text-decoration: none
+}
+
