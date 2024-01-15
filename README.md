@@ -1,1 +1,1 @@
-# learnNextjs basics
+# learnNextjs basic
