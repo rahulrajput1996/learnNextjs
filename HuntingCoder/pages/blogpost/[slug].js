@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import styles from "../../styles/Blog.module.css";
+import * as fs from "fs";
 
 const Myslog = (props) => {
   const router = useRouter();
@@ -32,7 +33,9 @@ const Myslog = (props) => {
           <h3 className={styles.contchild}>{slug}</h3>
           <h3 className={styles.contchild}>{contentData?.title}</h3>
           {/* <span>{contentData?.content}</span> */}
-          <span dangerouslySetInnerHTML={createMarkup(contentData?.content)}></span>
+          <span
+            dangerouslySetInnerHTML={createMarkup(contentData?.content)}
+          ></span>
           <h3 style={{ textAlign: "center" }}>{contentData?.author}</h3>
         </div>
       </div>
@@ -55,26 +58,21 @@ export default Myslog;
 // }
 
 export async function getStaticPaths() {
-  let data1 = await fetch("http://localhost:3000/api/blogs");
-  let json1 = await data1.json();
+  const content = await fs.promises.readdir(`jsonContent`);
   let arr = [];
-  json1.forEach((element) => {
-    arr.push({ params: { slug: element } })
-  })
-  console.log(arr)
+  content.forEach((element) => {
+    arr.push({ params: { slug: element } });
+  });
   return {
     paths: arr,
-    fallback: true // false or 'blocking'
+    fallback: true, // false or 'blocking'
   };
 }
 
 export async function getStaticProps(context) {
-  console.log(context)
   const { slug } = context.params;
-
-  const data = await fetch(`http://localhost:3000/api/blog?title=${slug}`);
-  const response = await data.json();
+  const content = await fs.promises.readFile(`jsonContent/${slug}`, "utf-8");
   return {
-    props: { response }
-  }
+    props: { response: JSON.parse(content) },
+  };
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import styles from "../styles/Blog.module.css";
+import * as fs from "fs";
 
 const Blog = (props) => {
   const [allFiles, setAllFiles] = useState(props.json1);
@@ -54,16 +55,17 @@ export default Blog;
 //   }
 // }
 
-export async function getStaticProps(context) {
-
-  let data1 = await fetch("http://localhost:3000/api/blogs");
-  let data2 = await fetch("http://localhost:3000/api/allBlogs");
-  let json1 = await data1.json();
-  let json2 = await data2.json();
-
+export async function getStaticProps() {
+  let content = await fs.promises.readdir(`jsonContent`);
+  let arr = [];
+  content.forEach((element) => {
+    let content3 = fs.readFileSync(`jsonContent/${element}`, "utf-8");
+    arr.push(JSON.parse(content3));
+  });
   return {
     props: {
-      json1, json2
-    }
-  }
+      json1: content,
+      json2: arr,
+    },
+  };
 }
