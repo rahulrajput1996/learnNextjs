@@ -2,24 +2,24 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import styles from "../styles/Blog.module.css";
 
-const Blog = () => {
-  const [allFiles, setAllFiles] = useState([]);
-  const [allFilesData, setAllFilesData] = useState([]);
+const Blog = (props) => {
+  const [allFiles, setAllFiles] = useState(props.json1);
+  const [allFilesData, setAllFilesData] = useState(props.json2);
 
-  const fetchAllFilesName = async () => {
-    try {
-      let data1 = await fetch("http://localhost:3000/api/blogs");
-      let data2 = await fetch("http://localhost:3000/api/allBlogs");
-      let json1 = await data1.json();
-      let json2 = await data2.json();
-      setAllFiles(json1);
-      setAllFilesData(json2);
-    } catch (error) {}
-  };
+  // const fetchAllFilesName = async () => {
+  //   try {
+  //     let data1 = await fetch("http://localhost:3000/api/blogs");
+  //     let data2 = await fetch("http://localhost:3000/api/allBlogs");
+  //     let json1 = await data1.json();
+  //     let json2 = await data2.json();
+  //     setAllFiles(json1);
+  //     setAllFilesData(json2);
+  //   } catch (error) { }
+  // };
 
-  useEffect(() => {
-    fetchAllFilesName();
-  }, []);
+  // useEffect(() => {
+  //   fetchAllFilesName();
+  // }, []);
 
   return (
     <>
@@ -30,7 +30,7 @@ const Blog = () => {
               <Link href={`/blogpost/${item}`} className={styles.contchild}>
                 <h3>{allFilesData[index].title}</h3>
               </Link>
-              <span>{allFilesData[index].content}</span>
+              <span>{allFilesData[index].metaDescription}</span>
             </div>
           );
         })}
@@ -40,3 +40,30 @@ const Blog = () => {
 };
 
 export default Blog;
+
+// export const getServerSideProps = async (context) => {
+//   let data1 = await fetch("http://localhost:3000/api/blogs");
+//   let data2 = await fetch("http://localhost:3000/api/allBlogs");
+//   let json1 = await data1.json();
+//   let json2 = await data2.json();
+
+//   return {
+//     props: {
+//       json1, json2
+//     }
+//   }
+// }
+
+export async function getStaticProps(context) {
+
+  let data1 = await fetch("http://localhost:3000/api/blogs");
+  let data2 = await fetch("http://localhost:3000/api/allBlogs");
+  let json1 = await data1.json();
+  let json2 = await data2.json();
+
+  return {
+    props: {
+      json1, json2
+    }
+  }
+}
