@@ -3,6 +3,7 @@ import fs from 'fs';
 export default async function handler(req, res) {
     try {
         let content = fs.readdirSync(`jsonContent`);
+        content = content.slice(0, parseInt(req.query.count));
         let arr = [];
         content.forEach((element) => {
             let content = fs.readFileSync(`jsonContent/${element}`, 'utf-8');
